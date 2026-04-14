@@ -15,10 +15,23 @@ app.get('/', (req, res )=>{
 
 
 //get method to send users over 
-app.get("/users", (req, res) => {
-  res.send(users);
-});
+// app.get("/users", (req, res) => {
+//   res.send(users);
+// });
+const findUserByName = (name) => {
+  return users["users_list"].filter((user) => user["name"] === name);
+};
 
+app.get("/users", (req, res) => {
+  const name = req.query.name;
+  if (name != undefined) {
+    let result = findUserByName(name);
+    result = { users_list: result };
+    res.send(result);
+  } else {
+    res.send(users);
+  }
+});
 
 app.listen(port, ()=> {
     console.log(`example app listening at http://localhost:${port}`)
@@ -28,7 +41,7 @@ const users = {
     {
       id: "xyz789",
       name: "Charlie",
-      job: "Janitor",
+      job: "Software Engineer",
     },
     {
       id: "abc123",

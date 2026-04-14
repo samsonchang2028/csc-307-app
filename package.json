@@ -18,6 +18,7 @@
   },
   "workspaces": [
     "react-frontend",
-    "packages/*"
+    "packages/*",
+    "express-backend"
   ]
 }

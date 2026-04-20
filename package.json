@@ -14,11 +14,15 @@
   "scripts": {
     "start": "npm run start --prefix react-frontend",
     "dev": "npm run dev --prefix react-frontend",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
   },
   "workspaces": [
     "react-frontend",
     "packages/*",
     "express-backend"
-  ]
+  ],
+  "dependencies": {
+    "cors": "^2.8.6"
+  }
 }

@@ -22,12 +22,10 @@
     "packages/*",
     "express-backend"
   ],
-<<<<<<< HEAD
   "dependencies": {
     "cors": "^2.8.6"
-=======
+  },
   "devDependencies": {
     "nodemon": "^3.1.14"
->>>>>>> b04b23070979621563ed099be30f193612f6dbe3
   }
 }

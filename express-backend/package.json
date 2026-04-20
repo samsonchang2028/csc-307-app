@@ -7,15 +7,9 @@
   "type": "module",
   "main": "backend.js",
   "scripts": {
-<<<<<<< HEAD
     "start": "node backend.js",
     "dev": "node --watch backend.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-=======
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon backend.js",
-    "start": "node backend.js"
->>>>>>> b04b23070979621563ed099be30f193612f6dbe3
   },
   "dependencies": {
     "express": "^5.2.1"

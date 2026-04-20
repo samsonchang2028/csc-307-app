@@ -36,18 +36,10 @@ const users = {
 };
 
 app.use(express.json());
-<<<<<<< HEAD
 app.use(cors());
-=======
-
-// get method for hello world
-// app.get('/', (req, res )=>{
-//     res.send("Hello world!");
-// });
->>>>>>> b04b23070979621563ed099be30f193612f6dbe3
 
 
-//get method to send users over 
+//get method to send users over
 // app.get("/users", (req, res) => {
 //   res.send(users);
 // });

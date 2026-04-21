@@ -13,11 +13,25 @@ function MyApp() {
   // }
   const [characters, setCharacters] = useState([]);
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
+  function deleteUser(id) {
+    const promise = fetch(`http://localhost:8000/users/${id}`, {
+      method: "DELETE",
     });
-    setCharacters(updated);
+    return promise;
+  }
+
+  function removeOneCharacter(id) {
+    deleteUser(id)
+      .then((res) => {
+        if (res.status === 204) {
+          setCharacters((prevCharacters) =>
+            prevCharacters.filter((character) => character.id !== id)
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   useEffect(() => {
     fetchUsers()
@@ -43,7 +57,13 @@ function MyApp() {
     postUser(person)
       .then((res) => {
         if (res.status === 201) {
-          setCharacters((prevCharacters) => [...prevCharacters, person]);
+          return res.json();
+        }
+        return null;
+      })
+      .then((newUser) => {
+        if (newUser !== null) {
+          setCharacters((prevCharacters) => [...prevCharacters, newUser]);
         }
       })
       .catch((error) => {

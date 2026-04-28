@@ -1,9 +1,18 @@
 import express from "express";
 import cors from "cors";
-
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import userService from "./services/user-service.js";
 
 const app = express();
 const port = 8000;
+
+dotenv.config();
+const { MONGO_CONNECTION_STRING } = process.env;
+
+mongoose.set("debug", true);
+mongoose.connect(MONGO_CONNECTION_STRING + "users")
+  .catch((error) => console.log(error));
 
 const users = {
   users_list: [
@@ -36,18 +45,10 @@ const users = {
 };
 
 app.use(express.json());
-<<<<<<< HEAD
 app.use(cors());
-=======
-
-// get method for hello world
-// app.get('/', (req, res )=>{
-//     res.send("Hello world!");
-// });
->>>>>>> b04b23070979621563ed099be30f193612f6dbe3
 
 
-//get method to send users over 
+//get method to send users over
 // app.get("/users", (req, res) => {
 //   res.send(users);
 // });
@@ -105,14 +106,9 @@ app.post("/users", (req, res) => {
 
 
 app.delete("/users/:id", (req, res) => {
-  const id = req.params["id"]; //or req.params.id
-  let result = findUserById(id);
-  if (result === undefined) {
-    res.status(404).send("ID not found.");
-  } else {
-    users["users_list"] = users["users_list"].filter((user) => user["id"] !== id)
-    res.send({ message: "User deleted successfully", deletedUser: result });
-  }
+  userService.deleteUserById(req.params.id)
+    .then(deleted => deleted ? res.status(204).send() : res.status(404).send())
+    .catch(err => res.status(500).send(err));
 });
 
 

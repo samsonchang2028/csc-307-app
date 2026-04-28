@@ -82,6 +82,15 @@ app.get("/users", (req, res) => {
 const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id);
 
+const generateId = () => {
+  // Naive random ID generator with collision check against current users.
+  let id = "";
+  do {
+    id = Math.random().toString(36).slice(2, 8);
+  } while (findUserById(id) !== undefined);
+  return id;
+};
+
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result = findUserById(id);
@@ -99,16 +108,21 @@ const addUser = (user) => {
 };
 
 app.post("/users", (req, res) => {
-  const userToAdd = req.body;
-  addUser(userToAdd);
-  res.send();
+  const userToAdd = { ...req.body, id: generateId() };
+  const createdUser = addUser(userToAdd);
+  res.status(201).send(createdUser);
 });
 
 
 app.delete("/users/:id", (req, res) => {
-  userService.deleteUserById(req.params.id)
-    .then(deleted => deleted ? res.status(204).send() : res.status(404).send())
-    .catch(err => res.status(500).send(err));
+  const id = req.params["id"]; //or req.params.id
+  let result = findUserById(id);
+  if (result === undefined) {
+    res.status(404).send("ID not found.");
+  } else {
+    users["users_list"] = users["users_list"].filter((user) => user["id"] !== id)
+    res.status(204).send();
+  }
 });
 
 

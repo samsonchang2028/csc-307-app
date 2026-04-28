@@ -23,7 +23,9 @@
     "express-backend"
   ],
   "dependencies": {
-    "cors": "^2.8.6"
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "mongoose": "^9.5.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

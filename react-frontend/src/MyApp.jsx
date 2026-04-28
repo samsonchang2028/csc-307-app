@@ -13,11 +13,25 @@ function MyApp() {
   // }
   const [characters, setCharacters] = useState([]);
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
+  function removeOneCharacter(characterId) {
+    // Make DELETE request to backend
+    const promise = fetch(`http://localhost:8000/users/${characterId}`, {
+      method: "DELETE",
     });
-    setCharacters(updated);
+
+    promise
+      .then((res) => {
+        if (res.ok) {
+          // Remove from state based on _id
+          const updated = characters.filter((character) => {
+            return character._id !== characterId;
+          });
+          setCharacters(updated);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   useEffect(() => {
     fetchUsers()

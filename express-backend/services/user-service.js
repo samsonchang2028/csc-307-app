@@ -27,11 +27,8 @@ function getMongoURI(dbname) {
   return finalURI;
 }
 
-// Mongoose 6+ does not need useNewUrlParser or useUnifiedTopology
-mongoose
-  .connect(getMongoURI("users"))
-  .then(() => console.log("Successfully connected to MongoDB"))
-  .catch((error) => console.log("Connection Error:", error));
+// Connection is now handled in backend.js
+// No need to call mongoose.connect() here
 
 function addUser(user) {
   const userToAdd = new userModel(user);
